@@ -14,7 +14,8 @@ class BinarySearchTree {
   }
 
   root() {
-    return this.head
+    let currentNode = this.head;
+	return currentNode;
   }
 
   add(data) {
@@ -56,7 +57,9 @@ class BinarySearchTree {
   }
 
   has(data) {
-    return this.searchNode(this.head, data) != null
+	if (!this.head) {
+		return false;
+	} return this.searchNode(this.head, data) != null
   }
 
   find(data) {
@@ -91,11 +94,12 @@ class BinarySearchTree {
 		} else if (node.right === null) {
 			node = node.left;
 			return node;
+		} else {
+			let maxNode = this.findMaxNode(node.left);
+			node.data = maxNode.data
+			node.left = this.removeNode(node.left, maxNode.data);
+			return node;
 		}
-	
-		let maxNode = this.findMaxNode(node.left);
-		node.left = this.removeNode(node.left, maxNode.data);
-		return node;
 	}
   }
 
@@ -112,7 +116,7 @@ class BinarySearchTree {
 	}
 
 	let node = this.head;
-	while (node.left != null) {
+	while (node.left) {
 		node = node.left;
 	}
 	return node.data;
